@@ -225,20 +225,6 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 	};
 
-	// angle from z-axis around y-axis
-	this.getTheta = function() {
-
-		return Math.atan2( offset.x, offset.z );
-
-    }
-
-	// angle from y-axis
-	this.getPhi = function() {
-
-		return Math.atan2( Math.sqrt( offset.x * offset.x + offset.z * offset.z ), offset.y );
-
-	}
-
 	this.update = function () {
 
 		var position = this.object.position;
@@ -248,8 +234,13 @@ THREE.OrbitControls = function ( object, domElement ) {
 		// rotate offset to "y-axis-is-up" space
 		offset.applyQuaternion( quat );
 
-		var theta = this.getTheta();
-		var phi = this.getPhi();
+		// angle from z-axis around y-axis
+
+		var theta = Math.atan2( offset.x, offset.z );
+
+		// angle from y-axis
+
+		var phi = Math.atan2( Math.sqrt( offset.x * offset.x + offset.z * offset.z ), offset.y );
 
 		theta += this.damping * thetaDelta;
 		phi += this.damping * phiDelta;
